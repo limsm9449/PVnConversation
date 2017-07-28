@@ -3,6 +3,7 @@ package com.sleepingbear.pvnconversation;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 
 public class CategoryActivity extends AppCompatActivity {
     private CategoryAdapter adapter;
+    private DbHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class CategoryActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
+
+        dbHelper = new DbHelper(getApplicationContext());
+        db = dbHelper.getWritableDatabase();
 
         Bundle b = this.getIntent().getExtras();
 
@@ -65,15 +71,26 @@ public class CategoryActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             CategoryViewItem cur = (CategoryViewItem) adapter.getItem(position);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("foreign", cur.getLine1());
-            bundle.putString("han", cur.getLine2());
-            bundle.putString("sampleSeq", "");
+            String entryId = DicDb.getEntryIdForWord(db, cur.getLine1());
+            if ( "".equals(entryId) ) {
+                Bundle bundle = new Bundle();
+                bundle.putString("foreign", cur.getLine1());
+                bundle.putString("han", cur.getLine2());
+                bundle.putString("sampleSeq", "");
 
-            Intent intent = new Intent(getApplicationContext(), SentenceViewActivity.class);
-            intent.putExtras(bundle);
+                Intent intent = new Intent(getApplicationContext(), SentenceViewActivity.class);
+                intent.putExtras(bundle);
 
-            startActivity(intent);
+                startActivity(intent);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("entryId", entryId);
+
+                Intent intent = new Intent(getApplicationContext(), WordViewActivity.class);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
         }
     };
 

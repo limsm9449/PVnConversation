@@ -236,6 +236,9 @@ public class HelpActivity extends AppCompatActivity {
             allSb.append(tempSb.toString());
         }
 
+        int fontSize = Integer.parseInt( DicUtils.getPreferencesValue( this, CommConstants.preferences_font ) );
+        ((TextView) this.findViewById(R.id.my_c_help_tv1)).setTextSize(fontSize);
+
         if ( "ALL".equals(b.getString("SCREEN")) ) {
             ((TextView) this.findViewById(R.id.my_c_help_tv1)).setText(allSb.toString());
         } else {
