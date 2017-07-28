@@ -478,4 +478,12 @@ public class DicUtils {
 
         return rtn;
     }
+
+    public static String getEngString(String word) {
+        if ( word == null || "".equals(word) ) {
+            return "";
+        } else {
+            return word.replaceAll("[áàảãạăắằẳẵặâấầẩẫậ]", "a").replaceAll("[óòỏõọôốồổỗộơớờởỡợȏ]", "o").replaceAll("[éèẻẽẹêếềểễệ]", "e").replaceAll("[úùủũụưứừửữự]", "u").replaceAll("[íìỉĩị]", "i").replaceAll("[ýỳỷỹỵ]", "y");
+        }
+    }
 }

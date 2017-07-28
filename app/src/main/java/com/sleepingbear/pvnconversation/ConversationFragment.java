@@ -122,7 +122,7 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
             String[] search = et_search.getText().toString().split(",");
             String condi = "";
             for ( int i = 0; i < search.length; i++ ) {
-                condi += ("".equals(condi) ? "" : " OR ") + " SENTENCE1 LIKE '%" + search[i].replaceAll(" ","%") + "%'";
+                condi += ("".equals(condi) ? "" : " OR ") + " SENTENCE1_ENG LIKE '%" + DicUtils.getEngString(search[i]).replaceAll(" ","%") + "%'";
                 condi += ("".equals(condi) ? "" : " OR ") + " SENTENCE2 LIKE '%" + search[i].replaceAll(" ","%") + "%'";
             }
             sql.append(" WHERE " + condi + CommConstants.sqlCR);

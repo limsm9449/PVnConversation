@@ -379,12 +379,13 @@ public class DicQuery {
 
         sql.append("SELECT SEQ _id, SEQ, SENTENCE1, SENTENCE2" + CommConstants.sqlCR);
         sql.append("  FROM DIC_SAMPLE" + CommConstants.sqlCR);
+        sql.append(" WHERE CONVERSATION_YN = 'Y' " + CommConstants.sqlCR);
         if ( difficult == 1) {
-            sql.append("  WHERE WORD_CNT < 6" + CommConstants.sqlCR);
+            sql.append("  AND WORD_CNT < 7" + CommConstants.sqlCR);
         } else if ( difficult == 2) {
-            sql.append("  WHERE WORD_CNT BETWEEN 6 AND 9" + CommConstants.sqlCR);
+            sql.append("  AND WORD_CNT BETWEEN 7 AND 10" + CommConstants.sqlCR);
         } else {
-            sql.append("  WHERE WORD_CNT > 9" + CommConstants.sqlCR);
+            sql.append("  AND WORD_CNT > 10" + CommConstants.sqlCR);
         }
         sql.append(" ORDER BY RANDOM()" + CommConstants.sqlCR);
         sql.append(" LIMIT 1000" + CommConstants.sqlCR);

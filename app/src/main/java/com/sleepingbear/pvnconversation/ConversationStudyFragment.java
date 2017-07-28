@@ -194,6 +194,10 @@ public class ConversationStudyFragment extends Fragment implements View.OnClickL
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_han)).setText(my_tv_han.getText());
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_foreign)).setText(my_tv_foreign.getText());
 
+                    int fontSize = Integer.parseInt( DicUtils.getPreferencesValue( getContext(), CommConstants.preferences_font ) );
+                    ((TextView) dialog_layout.findViewById(R.id.my_tv_han)).setTextSize(fontSize);
+                    ((TextView) dialog_layout.findViewById(R.id.my_tv_foreign)).setTextSize(fontSize);
+
                     ((Button) dialog_layout.findViewById(R.id.my_b_next)).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
