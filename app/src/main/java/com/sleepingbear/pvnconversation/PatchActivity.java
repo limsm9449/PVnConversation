@@ -32,7 +32,7 @@ public class PatchActivity extends AppCompatActivity {
         patch.append("* 신규 패치" + CommConstants.sqlCR);
         patch.append("- 환경설정에서 글씨 크기를 변경할 수 있도록 변경" + CommConstants.sqlCR);
         patch.append("- 회화 검색에서 성조없이 검색이 가능하도록 수정" + CommConstants.sqlCR);
-        patch.append("- 예문 데이가 추가" + CommConstants.sqlCR);
+        patch.append("- 예문 데이타 추가" + CommConstants.sqlCR);
         patch.append("" + CommConstants.sqlCR);
         patch.append("" + CommConstants.sqlCR);
 
