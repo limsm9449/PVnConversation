@@ -33,6 +33,7 @@ public class PatternActivity extends AppCompatActivity implements TextToSpeech.O
     public int mSelect = 0;
     private boolean isForeignView = false;
     private TextToSpeech myTTS;
+    int fontSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,10 @@ public class PatternActivity extends AppCompatActivity implements TextToSpeech.O
         ab.setHomeButtonEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( getApplicationContext(), CommConstants.preferences_font ) );
+
         ((TextView)this.findViewById(R.id.my_tv_pattern_desc)).setText("뜻 : " + b.getString("DESC"));
+        ((TextView) this.findViewById(R.id.my_tv_pattern_desc)).setTextSize(fontSize);
 
         dbHelper = new DbHelper(this);
         db = dbHelper.getWritableDatabase();
@@ -225,9 +229,12 @@ public class PatternActivity extends AppCompatActivity implements TextToSpeech.O
 class PatternCursorAdapter extends CursorAdapter {
     public HashMap statusData = new HashMap();
     public boolean isForeignView = false;
+    int fontSize = 0;
 
     public PatternCursorAdapter(Context context, Cursor cursor, Activity activity) {
         super(context, cursor, 0);
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -245,6 +252,10 @@ class PatternCursorAdapter extends CursorAdapter {
         } else {
             ((TextView) view.findViewById(R.id.my_tv_foreign)).setText("Click..");
         }
+
+        //사이즈 설정
+        ((TextView) view.findViewById(R.id.my_tv_han)).setTextSize(fontSize);
+        ((TextView) view.findViewById(R.id.my_tv_foreign)).setTextSize(fontSize);
     }
 
     public void setForeignView(boolean foreignView) {

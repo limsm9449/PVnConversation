@@ -26,6 +26,7 @@ public class CommConstants {
 
     public final static int s_note = 1;
     public final static int s_vocabulary = 2;
+    public final static int s_setting = 3;
 
     public static int f_ConversationStudy = 0;
     public static int f_Conversation = 1;
@@ -43,4 +44,6 @@ public class CommConstants {
     public static String tag_voc_ins = "C_VOC_INS" ;
 
     public static String voc_default_code = "VOC0001" ;
+
+    public static String preferences_font = "key_fontSize";
 }

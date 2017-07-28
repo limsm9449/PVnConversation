@@ -91,10 +91,13 @@ public class CategoryActivity extends AppCompatActivity {
 
 class CategoryAdapter extends ArrayAdapter<CategoryViewItem> {
     private ArrayList<CategoryViewItem> items;
+    int fontSize = 0;
 
     public CategoryAdapter(Context context, int textViewResourceId, ArrayList<CategoryViewItem> items) {
         super(context, textViewResourceId, items);
         this.items = items;
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -109,6 +112,10 @@ class CategoryAdapter extends ArrayAdapter<CategoryViewItem> {
         if (p != null) {
             ((TextView) v.findViewById(R.id.my_tv_line1)).setText(p.getLine1());
             ((TextView) v.findViewById(R.id.my_tv_line2)).setText(p.getLine2());
+
+            //사이즈 설정
+            ((TextView) v.findViewById(R.id.my_tv_line1)).setTextSize(fontSize);
+            ((TextView) v.findViewById(R.id.my_tv_line2)).setTextSize(fontSize);
         }
 
         return v;

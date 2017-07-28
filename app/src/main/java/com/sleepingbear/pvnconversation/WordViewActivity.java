@@ -132,6 +132,11 @@ public class WordViewActivity extends AppCompatActivity implements View.OnClickL
             TextView tv_mean = (TextView)this.findViewById(R.id.my_c_wv_tv_mean);
             tv_mean.setText(wordCursor.getString(wordCursor.getColumnIndexOrThrow("MEAN")));
 
+            int fontSize = Integer.parseInt( DicUtils.getPreferencesValue( getApplicationContext(), CommConstants.preferences_font ) );
+            ((TextView) findViewById(R.id.my_c_wv_tv_word)).setTextSize(fontSize);
+            ((TextView) findViewById(R.id.my_c_wv_tv_spelling)).setTextSize(fontSize);
+            ((TextView) findViewById(R.id.my_c_wv_tv_mean)).setTextSize(fontSize);
+
             if ( "0".equals(wordCursor.getString(wordCursor.getColumnIndexOrThrow("MY_VOC"))) ) {
                 ImageButton ib_myvoc = (ImageButton)this.findViewById(R.id.my_c_wv_ib_myvoc);
                 ib_myvoc.setImageResource(android.R.drawable.star_off);
@@ -306,6 +311,7 @@ class WordViewCursorAdapter extends CursorAdapter {
 
     private DbHelper dbHelper;
     private SQLiteDatabase db;
+    int fontSize = 0;
 
     public WordViewCursorAdapter(Context context, Cursor cursor, int flags, int ords[], String[] spellings) {
         super(context, cursor, 0);
@@ -315,6 +321,8 @@ class WordViewCursorAdapter extends CursorAdapter {
 
         rowOrds = ords;
         rowSpellings = spellings;
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -358,5 +366,11 @@ class WordViewCursorAdapter extends CursorAdapter {
             tv_foriegn.setText(rowOrds[cursor.getPosition() - 1] + ". " + data1);
             tv_han.setText("     " + data2);
         }
+
+        //사이즈 설정
+        tv_kind.setTextSize(fontSize);
+        tv_mean.setTextSize(fontSize);
+        tv_foriegn.setTextSize(fontSize);
+        tv_han.setTextSize(fontSize);
     }
 }

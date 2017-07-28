@@ -32,48 +32,51 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Study1Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Study2Activity"
             android:label="@string/title_activity_study2"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Study3Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Study4Activity"
             android:label="@string/title_activity_study4"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VocabularyActivity"
             android:label="@string/title_activity_vocabulary"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SentenceViewActivity"
             android:label="@string/title_activity_sentence_view"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Study5Activity"
             android:label="@string/title_activity_study5"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HelpActivity"
             android:label="@string/title_activity_help"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StudyActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PatchActivity"
             android:label="@string/title_activity_patch"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -98,12 +101,15 @@
             android:name=".GrammarActivity"
             android:label="@string/title_activity_grammar"
             android:screenOrientation="portrait"
-            android:theme="@style/MyMaterialTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CategoryActivity"
             android:label="@string/title_activity_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
     </application>
 
 

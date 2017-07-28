@@ -258,6 +258,7 @@ class Study2CursorAdapter extends CursorAdapter {
     private Cursor mCursor;
 
     private int mSelect;
+    int fontSize = 0;
 
     private ArrayList<Study2Item> mAnswerAl;
 
@@ -286,6 +287,8 @@ class Study2CursorAdapter extends CursorAdapter {
         mWordMean = wordMean;
 
         mAnswerAl = answerAl;
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -478,18 +481,11 @@ class Study2CursorAdapter extends CursorAdapter {
         }
 
         //UI 수정
-        if ( "WORD".equals(mWordMean) ) {
-            ((TextView)view.findViewById(R.id.my_c_s2i_tv_question)).setTextSize(15);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer1)).setTextSize(13);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer2)).setTextSize(13);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer3)).setTextSize(13);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer4)).setTextSize(13);
-        } else {
-            ((TextView)view.findViewById(R.id.my_c_s2i_tv_question)).setTextSize(13);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer1)).setTextSize(15);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer2)).setTextSize(15);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer3)).setTextSize(15);
-            ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer4)).setTextSize(15);
-        }
+        ((TextView)view.findViewById(R.id.my_c_s2i_tv_question)).setTextSize(fontSize);
+        ((TextView)view.findViewById(R.id.my_c_s2i_tv_answer)).setTextSize(fontSize);
+        ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer1)).setTextSize(fontSize);
+        ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer2)).setTextSize(fontSize);
+        ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer3)).setTextSize(fontSize);
+        ((RadioButton)view.findViewById(R.id.my_c_s2i_rb_answer4)).setTextSize(fontSize);
     }
 }

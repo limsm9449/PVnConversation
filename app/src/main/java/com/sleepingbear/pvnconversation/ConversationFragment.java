@@ -78,6 +78,8 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
         ((ImageView) mainView.findViewById(R.id.my_iv_view)).setOnClickListener(this);
         ((ImageView) mainView.findViewById(R.id.my_iv_hide)).setOnClickListener(this);
 
+        int fontSize = Integer.parseInt( DicUtils.getPreferencesValue( getContext(), CommConstants.preferences_font ) );
+        ((TextView) mainView.findViewById(R.id.my_tv_msg)).setTextSize(fontSize);
 
         ((ImageView) mainView.findViewById(R.id.my_iv_hide)).setVisibility(View.GONE);
 
@@ -86,8 +88,19 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
         return mainView;
     }
 
+    public void refreshListView() {
+        if ( "".equals(et_search.getText().toString().trim().toLowerCase()) ) {
+            return;
+        }
+    }
+
     public void changeListView(boolean isKeyin) {
         if ( isKeyin ) {
+            if ( "".equals(et_search.getText().toString().trim().toLowerCase()) ) {
+                Toast.makeText(getContext(), "검색할 단어를 입력하세요.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             ((RelativeLayout)mainView.findViewById(R.id.my_f_conv_rl_msg)).setVisibility(View.GONE);
 
             if (task != null) {
@@ -345,9 +358,12 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
 class ConversationCursorAdapter extends CursorAdapter {
     public boolean isForeignView = false;
     public HashMap statusData = new HashMap();
+    int fontSize = 0;
 
     public ConversationCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -363,6 +379,10 @@ class ConversationCursorAdapter extends CursorAdapter {
         } else {
             ((TextView) view.findViewById(R.id.my_tv_foreign)).setText("Click..");
         }
+
+        //사이즈 설정
+        ((TextView) view.findViewById(R.id.my_tv_han)).setTextSize(fontSize);
+        ((TextView) view.findViewById(R.id.my_tv_foreign)).setTextSize(fontSize);
     }
 
     public void setForeignView(boolean foreignView) {

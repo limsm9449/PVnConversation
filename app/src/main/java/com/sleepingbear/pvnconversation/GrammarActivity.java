@@ -78,10 +78,13 @@ public class GrammarActivity extends AppCompatActivity {
 
 class GrammarAdapter extends ArrayAdapter<GrammarViewItem> {
     private ArrayList<GrammarViewItem> items;
+    private int fontSize = 0;
 
     public GrammarAdapter(Context context, int textViewResourceId, ArrayList<GrammarViewItem> items) {
         super(context, textViewResourceId, items);
         this.items = items;
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -96,6 +99,9 @@ class GrammarAdapter extends ArrayAdapter<GrammarViewItem> {
         if (p != null) {
             ((TextView) v.findViewById(R.id.my_tv_line1)).setText(p.getLine1());
             ((TextView) v.findViewById(R.id.my_tv_line2)).setText(p.getLine2());
+
+            ((TextView) v.findViewById(R.id.my_tv_line1)).setTextSize(fontSize);
+            ((TextView) v.findViewById(R.id.my_tv_line2)).setTextSize(fontSize);
 
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.line1 = p.getLine1();

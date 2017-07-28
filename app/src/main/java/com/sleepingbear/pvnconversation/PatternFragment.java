@@ -91,9 +91,12 @@ public class PatternFragment extends Fragment {
 }
 
 class PatternFragCursorAdapter extends CursorAdapter {
+    int fontSize = 0;
 
     public PatternFragCursorAdapter(Context context, Cursor cursor, int flags) {
         super(context, cursor, 0);
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -105,6 +108,10 @@ class PatternFragCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ((TextView) view.findViewById(R.id.my_tv_pattern)).setText(String.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("PATTERN"))));
         ((TextView) view.findViewById(R.id.my_tv_pattern_desc)).setText(String.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("DESC"))));
+
+        //사이즈 설정
+        ((TextView) view.findViewById(R.id.my_tv_pattern)).setTextSize(fontSize);
+        ((TextView) view.findViewById(R.id.my_tv_pattern_desc)).setTextSize(fontSize);
     }
 
 }

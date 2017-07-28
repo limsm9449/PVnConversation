@@ -70,9 +70,12 @@ public class CategoryFragment extends Fragment {
 }
 
 class CategoryFragCursorAdapter extends CursorAdapter {
+    int fontSize = 0;
 
     public CategoryFragCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( context, CommConstants.preferences_font ) );
     }
 
     @Override
@@ -85,5 +88,8 @@ class CategoryFragCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ((TextView) view.findViewById(R.id.my_tv_category)).setText(cursor.getString(cursor.getColumnIndexOrThrow("CATEGORY")));
+
+        //사이즈 설정
+        ((TextView) view.findViewById(R.id.my_tv_category)).setTextSize(fontSize);
     }
 }
