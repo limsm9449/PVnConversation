@@ -9,7 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class HelpActivity extends AppCompatActivity {
+    private int fontSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,6 +229,16 @@ public class HelpActivity extends AppCompatActivity {
         }
 
         tempSb.delete(0, tempSb.length());
+        tempSb.append("* 카드형 4지선다 TTS 학습" + CommConstants.sqlCR);
+        tempSb.append("- TTS를 이용하여 학습을 합니다." + CommConstants.sqlCR);
+        tempSb.append("" + CommConstants.sqlCR);
+        if ( "STUDY6".equals(b.getString("SCREEN")) ) {
+            CurrentSb.append(tempSb.toString());
+        } else {
+            allSb.append(tempSb.toString());
+        }
+
+        tempSb.delete(0, tempSb.length());
         tempSb.append("* 단어 상세" + CommConstants.sqlCR);
         tempSb.append("- 단어의 뜻, 발음, 상세 뜻, 예제, 기타 예제별로 단어 상세를 보실 수 있습니다." + CommConstants.sqlCR);
         tempSb.append(" .별표를 클릭하시면 Default 단어장에 추가 됩니다." + CommConstants.sqlCR);
@@ -236,14 +250,18 @@ public class HelpActivity extends AppCompatActivity {
             allSb.append(tempSb.toString());
         }
 
-        int fontSize = Integer.parseInt( DicUtils.getPreferencesValue( this, CommConstants.preferences_font ) );
-        ((TextView) this.findViewById(R.id.my_c_help_tv1)).setTextSize(fontSize);
-
         if ( "ALL".equals(b.getString("SCREEN")) ) {
             ((TextView) this.findViewById(R.id.my_c_help_tv1)).setText(allSb.toString());
         } else {
             ((TextView) this.findViewById(R.id.my_c_help_tv1)).setText(CurrentSb.toString() + CommConstants.sqlCR + CommConstants.sqlCR + allSb.toString());
         }
+
+        fontSize = Integer.parseInt( DicUtils.getPreferencesValue( this, CommConstants.preferences_font ) );
+        ((TextView) this.findViewById(R.id.my_c_help_tv1)).setTextSize(fontSize);
+
+        AdView av = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        av.loadAd(adRequest);
     }
 
     @Override

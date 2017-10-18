@@ -2,10 +2,8 @@ package com.sleepingbear.pvnconversation;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 public class FlowLayout extends ViewGroup {
 
@@ -129,6 +127,7 @@ public class FlowLayout extends ViewGroup {
         String compWord2 = "I";
         String compWord3 = "abcdeghkmnopqsuvwxyz";
         String compWord4 = "fijltr";
+
 
         for ( int i = 0; i < word.length() ; i++ ) {
             if ( compWord1.indexOf(word.substring(i, i +1)) > -1 ) {

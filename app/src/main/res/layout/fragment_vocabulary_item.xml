@@ -8,7 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -19,7 +21,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/my_c_s1i_tv_question"
                 android:layout_alignParentTop="true"
@@ -35,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/my_f_cat_tv_cnt"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="false"
                 android:layout_alignParentEnd="false"
                 android:textColor="#4f8ead"

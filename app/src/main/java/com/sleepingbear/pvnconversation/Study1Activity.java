@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -27,8 +26,7 @@ import android.widget.TextView;
 public class Study1Activity extends AppCompatActivity implements View.OnClickListener {
     private String mVocKind;
     private String mMemorization;
-    private String mFromDate;
-    private String mToDate;
+    private String mSort = "QUESTION ASC";
 
     private String mWordMean;
 
@@ -52,8 +50,6 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
         Bundle b = this.getIntent().getExtras();
         mVocKind = b.getString("vocKind");
         mMemorization = b.getString("memorization");
-        mFromDate = b.getString("fromDate");
-        mToDate = b.getString("toDate");
         mWordMean = "WORD";
 
         ActionBar ab = (ActionBar) getSupportActionBar();
@@ -76,8 +72,9 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
         RadioButton rb_mean = (RadioButton) findViewById(R.id.my_a_study1_rb_mean);
         rb_mean.setOnClickListener(this);
 
-        Button b_random = (Button) findViewById(R.id.my_a_study1_b_random);
-        b_random.setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_asc).setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_desc).setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_random).setOnClickListener(this);
 
         if ( "".equals(mMemorization) ) {
             ((RadioButton) findViewById(R.id.my_a_study1_rb_all)).setChecked(true);
@@ -88,6 +85,8 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
         }
 
         getListView();
+
+        DicUtils.setAdView(this);
     }
 
     public void getListView() {
@@ -110,14 +109,12 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
         if (mMemorization.length() == 1) {
             sql.append("   AND A.MEMORIZATION = '" + mMemorization + "' " + CommConstants.sqlCR);
         }
-        sql.append("   AND A.INS_DATE >= '" + mFromDate + "' " + CommConstants.sqlCR);
-        sql.append("   AND A.INS_DATE <= '" + mToDate + "' " + CommConstants.sqlCR);
-        sql.append(" ORDER BY A.RANDOM_SEQ" + CommConstants.sqlCR);
+        sql.append(" ORDER BY " + mSort + CommConstants.sqlCR);
         DicUtils.dicSqlLog(sql.toString());
 
         Cursor cursor = db.rawQuery(sql.toString(), null);
         if ( cursor.getCount() == 0 ) {
-            new android.app.AlertDialog.Builder(this)
+            new android.support.v7.app.AlertDialog.Builder(this)
                     .setTitle("알림")
                     .setMessage("데이타가 없습니다.\n암기 여부, 일자 조건을 조정해 주세요.")
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -154,9 +151,15 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.my_a_study1_rb_mean) {
             mWordMean = "MEAN";
             getListView();
-        } else if (v.getId() == R.id.my_a_study1_b_random) {
+        } else if (v.getId() == R.id.my_rb_sort_asc) {
+            mSort = "QUESTION ASC";
+            getListView();
+        } else if (v.getId() == R.id.my_rb_sort_desc) {
+            mSort = "QUESTION DESC";
+            getListView();
+        } else if (v.getId() == R.id.my_rb_sort_random) {
+            mSort = "RANDOM_SEQ";
             db.execSQL(DicQuery.updVocRandom());
-
             getListView();
         }
     }
@@ -190,6 +193,7 @@ public class Study1Activity extends AppCompatActivity implements View.OnClickLis
 
 
 class Study1CursorAdapter extends CursorAdapter {
+    int fontSize = 0;
     private String mWordMean;
     private Activity mActivity;
     private SQLiteDatabase mDb;
@@ -198,7 +202,6 @@ class Study1CursorAdapter extends CursorAdapter {
     boolean[] isItemView;
 
     private int mSelect;
-    int fontSize = 0;
 
     static class ViewHolder {
         protected CheckBox memorizationCheck;
@@ -232,7 +235,7 @@ class Study1CursorAdapter extends CursorAdapter {
 
         //암기 체크
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.memorizationCheck = (CheckBox) view.findViewById(R.id.my_c_s1i_cb_memorization);
+        viewHolder.memorizationCheck = (CheckBox) view.findViewById(R.id.my_cb_memorization);
         viewHolder.memorizationCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +243,7 @@ class Study1CursorAdapter extends CursorAdapter {
 
                 StringBuffer sql = new StringBuffer();
                 sql.append("UPDATE DIC_VOC " + CommConstants.sqlCR);
-                sql.append("   SET MEMORIZATION = '" + ( ((CheckBox)v.findViewById(R.id.my_c_s1i_cb_memorization)).isChecked() ? "Y" : "N") + "'" + CommConstants.sqlCR);
+                sql.append("   SET MEMORIZATION = '" + ( ((CheckBox)v.findViewById(R.id.my_cb_memorization)).isChecked() ? "Y" : "N") + "'" + CommConstants.sqlCR);
                 sql.append(" WHERE ENTRY_ID = '" + params[0] + "' " + CommConstants.sqlCR);
                 mDb.execSQL(sql.toString());
 
@@ -316,16 +319,16 @@ class Study1CursorAdapter extends CursorAdapter {
         viewHolder.seq = cursor.getString(cursor.getColumnIndexOrThrow("SEQ"));
         viewHolder.position = cursor.getPosition();
 
-        ((TextView) view.findViewById(R.id.my_c_s1i_tv_question)).setText(cursor.getString(cursor.getColumnIndexOrThrow("QUESTION")));
+        ((TextView) view.findViewById(R.id.my_tv_question)).setText(cursor.getString(cursor.getColumnIndexOrThrow("QUESTION")));
         if ( isItemView[cursor.getPosition()] ) {
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_answer)).setText(cursor.getString(cursor.getColumnIndexOrThrow("ANSWER")));
+            ((TextView) view.findViewById(R.id.my_tv_answer)).setText(cursor.getString(cursor.getColumnIndexOrThrow("ANSWER")));
         } else {
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_answer)).setText("?");
+            ((TextView) view.findViewById(R.id.my_tv_answer)).setText("?");
         }
 
         //암기 체크박스
         String memorization = cursor.getString(cursor.getColumnIndexOrThrow("MEMORIZATION"));
-        CheckBox cb_memorization = (CheckBox) view.findViewById(R.id.my_c_s1i_cb_memorization);
+        CheckBox cb_memorization = (CheckBox) view.findViewById(R.id.my_cb_memorization);
         if ("Y".equals(memorization)) {
             cb_memorization.setChecked(true);
         } else {
@@ -334,15 +337,15 @@ class Study1CursorAdapter extends CursorAdapter {
 
         //UI 수정
         if ( "WORD".equals(mWordMean) ) {
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_question)).setTextSize(15);
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_answer)).setTextSize(13);
+            ((TextView) view.findViewById(R.id.my_tv_question)).setTextSize(15);
+            ((TextView) view.findViewById(R.id.my_tv_answer)).setTextSize(13);
         } else {
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_question)).setTextSize(13);
-            ((TextView) view.findViewById(R.id.my_c_s1i_tv_answer)).setTextSize(15);
+            ((TextView) view.findViewById(R.id.my_tv_question)).setTextSize(13);
+            ((TextView) view.findViewById(R.id.my_tv_answer)).setTextSize(15);
         }
 
         //사이즈 설정
-        ((TextView) view.findViewById(R.id.my_c_s1i_tv_question)).setTextSize(fontSize);
-        ((TextView) view.findViewById(R.id.my_c_s1i_tv_answer)).setTextSize(fontSize);
+        ((TextView) view.findViewById(R.id.my_tv_question)).setTextSize(fontSize);
+        ((TextView) view.findViewById(R.id.my_tv_answer)).setTextSize(fontSize);
     }
 }

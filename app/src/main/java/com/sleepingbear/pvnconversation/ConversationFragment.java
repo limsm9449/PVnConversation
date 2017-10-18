@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -85,6 +86,8 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
 
         changeListView(false);
 
+        DicUtils.setAdView(mainView);
+
         return mainView;
     }
 
@@ -92,11 +95,12 @@ public class ConversationFragment extends Fragment implements View.OnClickListen
         if ( "".equals(et_search.getText().toString().trim().toLowerCase()) ) {
             return;
         }
+
     }
 
     public void changeListView(boolean isKeyin) {
         if ( isKeyin ) {
-            if ( "".equals(et_search.getText().toString().trim().toLowerCase()) ) {
+            if ( isRandom == false && "".equals(et_search.getText().toString().trim().toLowerCase()) ) {
                 Toast.makeText(getContext(), "검색할 단어를 입력하세요.", Toast.LENGTH_SHORT).show();
                 return;
             }

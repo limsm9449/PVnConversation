@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.Locale;
 
 public class SentenceViewActivity extends AppCompatActivity implements View.OnClickListener, TextToSpeech.OnInitListener {
@@ -89,6 +90,8 @@ public class SentenceViewActivity extends AppCompatActivity implements View.OnCl
         ImageButton ib_tts = (ImageButton) findViewById(R.id.my_c_sv_ib_tts);
         //ib_tts.setOnClickListener(this);
         ib_tts.setVisibility(View.GONE);
+
+        DicUtils.setAdView(this);
     }
 
     public void changeListView() {

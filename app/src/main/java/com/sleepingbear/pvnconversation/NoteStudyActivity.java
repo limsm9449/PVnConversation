@@ -18,8 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -80,6 +87,8 @@ public class NoteStudyActivity extends AppCompatActivity implements View.OnClick
 
         //리스트 내용 변경
         changeListView();
+
+        DicUtils.setAdView(this);
     }
 
     public void changeListView() {
@@ -176,6 +185,51 @@ public class NoteStudyActivity extends AppCompatActivity implements View.OnClick
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_han)).setTextSize(fontSize);
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_foreign)).setTextSize(fontSize);
 
+                    // 광고 추가
+                    if ( CommConstants.isFreeApp ) {
+                        PublisherAdView mPublisherAdView = new PublisherAdView(this);
+                        mPublisherAdView.setAdSizes(new AdSize(300, 250));
+                        mPublisherAdView.setAdUnitId(getResources().getString(R.string.banner_ad_unit_id2));
+
+                        // Create an ad request.
+                        PublisherAdRequest.Builder publisherAdRequestBuilder = new PublisherAdRequest.Builder();
+                        ((RelativeLayout) dialog_layout.findViewById(R.id.my_rl_admob)).addView(mPublisherAdView);
+
+                        mPublisherAdView.setAdListener(new AdListener() {
+                            @Override
+                            public void onAdLoaded() {
+                                super.onAdLoaded();
+
+                                //개별 조회면은 다음 버튼을 안보이게 해준다.
+                                if (cursor.getCount() > 1) {
+                                    ((Button) dialog_layout.findViewById(R.id.my_b_next)).setVisibility(View.VISIBLE);
+                                }
+                                ((Button) dialog_layout.findViewById(R.id.my_b_close)).setVisibility(View.VISIBLE);
+                                ((Button) dialog_layout.findViewById(R.id.my_b_detail)).setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(int i) {
+                                super.onAdFailedToLoad(i);
+
+                                if (cursor.getCount() > 1) {
+                                    ((Button) dialog_layout.findViewById(R.id.my_b_next)).setVisibility(View.VISIBLE);
+                                }
+                                ((Button) dialog_layout.findViewById(R.id.my_b_close)).setVisibility(View.VISIBLE);
+                                ((Button) dialog_layout.findViewById(R.id.my_b_detail)).setVisibility(View.VISIBLE);
+                            }
+                        });
+
+                        // Start loading the ad.
+                        mPublisherAdView.loadAd(publisherAdRequestBuilder.build());
+
+                        ((Button) dialog_layout.findViewById(R.id.my_b_next)).setVisibility(View.GONE);
+                        ((Button) dialog_layout.findViewById(R.id.my_b_close)).setVisibility(View.GONE);
+                        ((Button) dialog_layout.findViewById(R.id.my_b_detail)).setVisibility(View.GONE);
+                    } else {
+                        dialog_layout.findViewById(R.id.my_rl_admob).setVisibility(View.GONE);
+                    }
+
                     ((Button) dialog_layout.findViewById(R.id.my_b_next)).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -210,11 +264,6 @@ public class NoteStudyActivity extends AppCompatActivity implements View.OnClick
                             alertDialog.dismiss();
                         }
                     });
-
-                    //개별 조회면은 다음 버튼을 안보이게 해준다.
-                    if ( cursor.getCount() == 1 ) {
-                        ((Button) dialog_layout.findViewById(R.id.my_b_next)).setVisibility(View.GONE);
-                    }
 
                     alertDialog.setCanceledOnTouchOutside(false);
                     alertDialog.show();

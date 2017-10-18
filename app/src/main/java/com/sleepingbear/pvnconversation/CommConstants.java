@@ -16,6 +16,7 @@ public class CommConstants {
     public static int studyKind3 = 2;
     public static int studyKind4 = 3;
     public static int studyKind5 = 4;
+    public static int studyKind6 = 5;
 
     public static String tag = "vnConversation";
 
@@ -46,4 +47,6 @@ public class CommConstants {
     public static String voc_default_code = "VOC0001" ;
 
     public static String preferences_font = "key_fontSize";
+
+    public static boolean isFreeApp = false;
 }

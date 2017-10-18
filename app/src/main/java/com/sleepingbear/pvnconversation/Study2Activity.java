@@ -19,20 +19,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Study2Activity extends AppCompatActivity implements View.OnClickListener {
     private String mVocKind;
     private String mMemorization;
-    private String mFromDate;
-    private String mToDate;
+    private String mSort = "QUESTION ASC";
 
     private String mWordMean;
 
@@ -56,8 +55,6 @@ public class Study2Activity extends AppCompatActivity implements View.OnClickLis
         Bundle b = this.getIntent().getExtras();
         mVocKind = b.getString("vocKind");
         mMemorization = b.getString("memorization");
-        mFromDate = b.getString("fromDate");
-        mToDate = b.getString("toDate");
         mWordMean = "WORD";
 
         ActionBar ab = (ActionBar) getSupportActionBar();
@@ -80,8 +77,9 @@ public class Study2Activity extends AppCompatActivity implements View.OnClickLis
         RadioButton rb_mean = (RadioButton) findViewById(R.id.my_a_study2_rb_mean);
         rb_mean.setOnClickListener(this);
 
-        Button b_random = (Button) findViewById(R.id.my_a_study2_b_random);
-        b_random.setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_asc).setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_desc).setOnClickListener(this);
+        findViewById(R.id.my_rb_sort_random).setOnClickListener(this);
 
         if ( "".equals(mMemorization) ) {
             ((RadioButton) findViewById(R.id.my_a_study2_rb_all)).setChecked(true);
@@ -92,6 +90,8 @@ public class Study2Activity extends AppCompatActivity implements View.OnClickLis
         }
 
         getListView();
+
+        DicUtils.setAdView(this);
     }
 
     public void getListView() {
@@ -114,12 +114,10 @@ public class Study2Activity extends AppCompatActivity implements View.OnClickLis
         if (mMemorization.length() == 1) {
             sql.append("   AND A.MEMORIZATION = '" + mMemorization + "' " + CommConstants.sqlCR);
         }
-        sql.append("   AND A.INS_DATE >= '" + mFromDate + "' " + CommConstants.sqlCR);
-        sql.append("   AND A.INS_DATE <= '" + mToDate + "' " + CommConstants.sqlCR);
-        sql.append(" ORDER BY A.RANDOM_SEQ" + CommConstants.sqlCR);
+        sql.append(" ORDER BY " + mSort + CommConstants.sqlCR);
         Cursor cursor = db.rawQuery(sql.toString(), null);
         if ( cursor.getCount() == 0 ) {
-            new android.app.AlertDialog.Builder(this)
+            new android.support.v7.app.AlertDialog.Builder(this)
                     .setTitle("알림")
                     .setMessage("데이타가 없습니다.\n암기 여부, 일자 조건을 조정해 주세요.")
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -207,9 +205,15 @@ public class Study2Activity extends AppCompatActivity implements View.OnClickLis
         } else if (v.getId() == R.id.my_a_study2_rb_mean) {
             mWordMean = "MEAN";
             getListView();
-        } else if (v.getId() == R.id.my_a_study2_b_random) {
+        } else if (v.getId() == R.id.my_rb_sort_asc) {
+            mSort = "QUESTION ASC";
+            getListView();
+        } else if (v.getId() == R.id.my_rb_sort_desc) {
+            mSort = "QUESTION DESC";
+            getListView();
+        } else if (v.getId() == R.id.my_rb_sort_random) {
+            mSort = "RANDOM_SEQ";
             db.execSQL(DicQuery.updVocRandom());
-
             getListView();
         }
     }
@@ -252,13 +256,14 @@ class Study2Item  {
 }
 
 class Study2CursorAdapter extends CursorAdapter {
+    int fontSize = 0;
+
     private String mWordMean;
     private Activity mActivity;
     private SQLiteDatabase mDb;
     private Cursor mCursor;
 
     private int mSelect;
-    int fontSize = 0;
 
     private ArrayList<Study2Item> mAnswerAl;
 
@@ -457,19 +462,6 @@ class Study2CursorAdapter extends CursorAdapter {
         } else {
             ((TextView) view.findViewById(R.id.my_c_s2i_tv_answer)).setText("");
         }
-
-        /*
-        DicUtils.dicLog("aaaa : " + cursor.getPosition() + "," + (mAnswerAl.get(cursor.getPosition()).chkAnswer == 1 ? true : false) + "," +
-                (mAnswerAl.get(cursor.getPosition()).chkAnswer == 2 ? true : false)  + "," +
-                (mAnswerAl.get(cursor.getPosition()).chkAnswer == 3 ? true : false)  + "," +
-                (mAnswerAl.get(cursor.getPosition()).chkAnswer == 4 ? true : false)  + ","  );
-
-        String logStr = "";
-        for ( int i = 0; i < mAnswerAl.size(); i++ ) {
-            logStr += mAnswerAl.get(i).chkAnswer + ", ";
-        }
-        DicUtils.dicLog("bindview : " + cursor.getPosition() + " -> " + logStr);
-        */
 
         //암기 체크박스
         String memorization = cursor.getString(cursor.getColumnIndexOrThrow("MEMORIZATION"));

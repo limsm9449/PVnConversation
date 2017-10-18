@@ -24,10 +24,17 @@
             android:divider="@color/my_divider"
             android:dividerHeight="0.5dp"
             android:layout_alignParentTop="true"
+            android:layout_above="@+id/adView"
             android:layout_below="@+id/my_ll_line_1">
         </ListView>
 
-
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
 </FrameLayout>

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,6 +49,8 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
         mDb = (new DbHelper(getContext())).getWritableDatabase();
 
         changeListView();
+
+        DicUtils.setAdView(mainView);
 
         ((Button) mainView.findViewById(R.id.my_f_voc_b_2)).setOnClickListener(this);
 
@@ -82,7 +85,7 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
                     builder.setView(dialog_layout);
                     final AlertDialog alertDialog = builder.create();
 
-                    final EditText et_upd = ((EditText) dialog_layout.findViewById(R.id.my_et_upd_name));
+                    final EditText et_upd = ((EditText) dialog_layout.findViewById(R.id.my_et_upd));
                     et_upd.setText(cur.getString(cur.getColumnIndexOrThrow("KIND_NAME")));
 
                     ((Button) dialog_layout.findViewById(R.id.my_b_upd)).setTag(cur.getString(cur.getColumnIndexOrThrow("KIND")));
@@ -116,7 +119,7 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
                                 Toast.makeText(getContext(), "기본 단어장은 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show();
                                 alertDialog.dismiss();
                             } else {
-                                new AlertDialog.Builder(getActivity())
+                                new android.support.v7.app.AlertDialog.Builder(getActivity())
                                         .setTitle("알림")
                                         .setMessage("삭제된 데이타는 복구할 수 없습니다. 삭제하시겠습니까?")
                                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -146,8 +149,8 @@ public class VocabularyFragment extends Fragment implements View.OnClickListener
 
                     final EditText et_saveName = ((EditText) dialog_layout.findViewById(R.id.my_et_file_name));
                     et_saveName.setText(cur.getString(cur.getColumnIndexOrThrow("KIND_NAME")));
-                    ((Button) dialog_layout.findViewById(R.id.my_b_save)).setTag(cur.getString(cur.getColumnIndexOrThrow("KIND")));
-                    ((Button) dialog_layout.findViewById(R.id.my_b_save)).setOnClickListener(new View.OnClickListener() {
+                    ((Button) dialog_layout.findViewById(R.id.my_b_download)).setTag(cur.getString(cur.getColumnIndexOrThrow("KIND")));
+                    ((Button) dialog_layout.findViewById(R.id.my_b_download)).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             final String code = (String) v.getTag();
@@ -360,7 +363,9 @@ class VocabularyFlagmentCursorAdapter extends CursorAdapter {
         tv_category.setText(cursor.getString(cursor.getColumnIndexOrThrow("KIND_NAME")));
 
         TextView tv_cnt = (TextView) view.findViewById(R.id.my_f_cat_tv_cnt);
-        tv_cnt.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("CNT"))));
+        tv_cnt.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("CNT"))) +
+                " ( 암기 : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("M_CNT"))) + ", " +
+                " 미암기 : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("UM_CNT"))) + " )");
 
         //사이즈 설정
         ((TextView) view.findViewById(R.id.my_c_s1i_tv_question)).setTextSize(fontSize);

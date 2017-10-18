@@ -1,6 +1,5 @@
 package com.sleepingbear.pvnconversation;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 
 public class PatternFragment extends Fragment {
     private DbHelper dbHelper;
@@ -36,6 +36,8 @@ public class PatternFragment extends Fragment {
         db = dbHelper.getWritableDatabase();
 
         changeListView(true);
+
+        DicUtils.setAdView(mainView);
 
         return mainView;
     }

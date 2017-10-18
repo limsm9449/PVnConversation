@@ -97,6 +97,8 @@ public class VocabularyActivity extends AppCompatActivity implements View.OnClic
             }
         });
         spinner.setSelection(0);
+
+        DicUtils.setAdView(this);
     }
 
     public void getListView() {

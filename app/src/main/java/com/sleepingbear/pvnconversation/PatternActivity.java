@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -64,6 +65,8 @@ public class PatternActivity extends AppCompatActivity implements TextToSpeech.O
         db = dbHelper.getWritableDatabase();
 
         getListView();
+
+        DicUtils.setAdView(this);
     }
 
     public void getListView() {

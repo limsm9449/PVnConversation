@@ -62,6 +62,8 @@ public class GrammarActivity extends AppCompatActivity {
 
         GrammarAdapter m_adapter = new GrammarAdapter(this, R.layout.content_grammar_item, al);
         ((ListView) this.findViewById(R.id.my_c_gv_lv1)).setAdapter(m_adapter);
+
+        DicUtils.setAdView(this);
     }
 
     @Override

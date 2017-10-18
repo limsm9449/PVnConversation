@@ -2,11 +2,9 @@ package com.sleepingbear.pvnconversation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,6 +62,8 @@ public class CategoryActivity extends AppCompatActivity {
         ListView listView = (ListView) this.findViewById(R.id.my_c_category_lv);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(itemClickListener);
+
+        DicUtils.setAdView(this);
     }
 
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
@@ -108,7 +108,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 class CategoryAdapter extends ArrayAdapter<CategoryViewItem> {
     private ArrayList<CategoryViewItem> items;
-    int fontSize = 0;
+    private int fontSize = 0;
 
     public CategoryAdapter(Context context, int textViewResourceId, ArrayList<CategoryViewItem> items) {
         super(context, textViewResourceId, items);
@@ -130,7 +130,6 @@ class CategoryAdapter extends ArrayAdapter<CategoryViewItem> {
             ((TextView) v.findViewById(R.id.my_tv_line1)).setText(p.getLine1());
             ((TextView) v.findViewById(R.id.my_tv_line2)).setText(p.getLine2());
 
-            //사이즈 설정
             ((TextView) v.findViewById(R.id.my_tv_line1)).setTextSize(fontSize);
             ((TextView) v.findViewById(R.id.my_tv_line2)).setTextSize(fontSize);
         }

@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.Locale;
 
 public class WordViewActivity extends AppCompatActivity implements View.OnClickListener, OnInitListener {
@@ -73,6 +74,8 @@ public class WordViewActivity extends AppCompatActivity implements View.OnClickL
         entryId = b.getString("entryId");
 
         getWordInfo();
+
+        DicUtils.setAdView(this);
     }
 
     public void getWordInfo() {

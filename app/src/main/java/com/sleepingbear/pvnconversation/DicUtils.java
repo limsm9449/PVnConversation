@@ -8,6 +8,10 @@ import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -484,6 +488,26 @@ public class DicUtils {
             return "";
         } else {
             return word.replaceAll("[áàảãạăắằẳẵặâấầẩẫậ]", "a").replaceAll("[óòỏõọôốồổỗộơớờởỡợȏ]", "o").replaceAll("[éèẻẽẹêếềểễệ]", "e").replaceAll("[úùủũụưứừửữự]", "u").replaceAll("[íìỉĩị]", "i").replaceAll("[ýỳỷỹỵ]", "y");
+        }
+    }
+
+    public static void setAdView(AppCompatActivity app) {
+        AdView av = (AdView)app.findViewById(R.id.adView);
+        if ( CommConstants.isFreeApp ) {
+            AdRequest adRequest = new  AdRequest.Builder().build();
+            av.loadAd(adRequest);
+        } else {
+            av.setVisibility(View.GONE);
+        }
+    }
+
+    public static void setAdView(View view) {
+        AdView av = (AdView)view.findViewById(R.id.adView);
+        if ( CommConstants.isFreeApp ) {
+            AdRequest adRequest = new  AdRequest.Builder().build();
+            av.loadAd(adRequest);
+        } else {
+            av.setVisibility(View.GONE);
         }
     }
 }

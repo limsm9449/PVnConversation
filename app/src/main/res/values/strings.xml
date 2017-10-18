@@ -26,6 +26,7 @@
     <string name="action_translate">번역</string>
 
     <string name="action_settings">환경 설정</string>
+    <string name="action_no_ad">광고 제거 어플(유료)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_word_view">WordViewActivity</string>
@@ -35,10 +36,13 @@
     <string name="title_activity_vocabulary">VocabularyActivity</string>
     <string name="title_activity_sentence_view">SentenceViewActivity</string>
     <string name="title_activity_study5">Study5Activity</string>
+    <string name="title_activity_study6">Study6Activity</string>
     <string name="title_activity_web_view">영어 사이트</string>
     <string name="title_activity_help">도움말</string>
     <string name="title_activity_patch">PatchActivity</string>
     <string name="title_activity_my_sample">MySampleActivity</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3860766380986792/5582351069</string>
+    <string name="banner_ad_unit_id2">ca-app-pub-3860766380986792/1012550660</string>
     <string name="title_activity_web_dictionary">WebDictionaryActivity</string>
     <string name="title_activity_web_translate">WebTranslateActivity</string>
 
