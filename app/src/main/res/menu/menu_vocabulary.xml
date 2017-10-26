@@ -7,7 +7,10 @@
     <item android:id="@+id/action_edit" android:title=""
         android:orderInCategory="100" app:showAsAction="ifRoom"
         android:icon="@mipmap/ic_mode_edit_white_24dp"/>
-    <item android:id="@+id/action_help" android:title="@string/action_help"
-        android:orderInCategory="100" app:showAsAction="never"
-        android:icon="@mipmap/ic_help_outline_white_24dp"/>
+    <item android:id="@+id/action_tts" android:title="@string/action_tts"
+        android:orderInCategory="200" app:showAsAction="never"/>
+    <item android:id="@+id/action_all_memory" android:title="전체 암기"
+        android:orderInCategory="300" app:showAsAction="never"/>
+    <item android:id="@+id/action_all_unmemory" android:title="전체 미암기"
+        android:orderInCategory="400" app:showAsAction="never"/>
 </menu>

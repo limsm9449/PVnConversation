@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -174,9 +175,9 @@ public class NoteStudyActivity extends AppCompatActivity implements View.OnClick
                     final View dialog_layout = inflater.inflate(R.layout.dialog_correct_answer, null);
 
                     //dialog 생성..
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setView(dialog_layout);
-                    final android.app.AlertDialog alertDialog = builder.create();
+                    final AlertDialog alertDialog = builder.create();
 
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_han)).setText(my_tv_han.getText());
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_foreign)).setText(my_tv_foreign.getText());

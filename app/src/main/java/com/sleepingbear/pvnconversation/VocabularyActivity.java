@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -189,7 +190,7 @@ public class VocabularyActivity extends AppCompatActivity implements View.OnClic
             if ( !adapter.isCheck() ) {
                 Toast.makeText(this, "선택된 데이타가 없습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                new android.app.AlertDialog.Builder(this)
+                new AlertDialog.Builder(this)
                         .setTitle("알림")
                         .setMessage("삭제하시겠습니까?")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -332,6 +333,30 @@ public class VocabularyActivity extends AppCompatActivity implements View.OnClic
 
             adapter.editChange(isEditing);
             adapter.notifyDataSetChanged();
+        } else if (id == R.id.action_tts) {
+            Cursor cur = (Cursor) adapter.getItem(0);
+
+            String[] words  = new String[cur.getCount()];
+            String[] means  = new String[cur.getCount()];
+            for ( int i = 0; i < cur.getCount(); i++ ) {
+                cur.moveToPosition(i);
+                words[i] = DicUtils.getString(cur.getString(cur.getColumnIndexOrThrow("WORD")));
+                means[i] = DicUtils.getString(cur.getString(cur.getColumnIndexOrThrow("MEAN")));
+            }
+
+            Intent ttsIntent = new Intent(getApplicationContext(), MySpeechService.class);
+            stopService(ttsIntent);
+
+            ttsIntent = new Intent(getApplicationContext(), MySpeechService.class);
+            ttsIntent.putExtra("words", words);
+            ttsIntent.putExtra("means", means);
+            startService(ttsIntent);
+        } else if (id == R.id.action_all_memory) {
+            DicDb.updVocabularyAllMemory(db, kind);
+            getListView();
+        } else if (id == R.id.action_all_unmemory) {
+            DicDb.updVocabularyAllUnmemory(db, kind);
+            getListView();
         }
 
         return super.onOptionsItemSelected(item);
@@ -339,6 +364,9 @@ public class VocabularyActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
+        Intent ttsIntent = new Intent(getApplicationContext(), MySpeechService.class);
+        stopService(ttsIntent);
+
         Intent intent = new Intent(this.getApplication(), VocabularyActivity.class);
         intent.putExtra("isChange", (isChange ? "Y" : "N"));
         setResult(RESULT_OK, intent);

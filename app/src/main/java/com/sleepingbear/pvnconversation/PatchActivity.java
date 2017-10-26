@@ -32,9 +32,11 @@ public class PatchActivity extends AppCompatActivity {
 
         patch.append("* 신규 패치" + CommConstants.sqlCR);
         patch.append("" + CommConstants.sqlCR);
+        patch.append("- 단어장의 단어를 추가, 삭제할 경우 메인의 단어 갯수가 변경이 안되는 문제점 수정" + CommConstants.sqlCR);
+        patch.append("- 단어장에서 TTS, 전체 암기, 전체 미암기 기능 추가" + CommConstants.sqlCR);
+        patch.append("" + CommConstants.sqlCR);
+        patch.append("" + CommConstants.sqlCR);
         patch.append("- Android 7에서 다이얼로그 버튼이 안나오는 문제점 수정" + CommConstants.sqlCR);
-        patch.append("" + CommConstants.sqlCR);
-        patch.append("" + CommConstants.sqlCR);
         patch.append("- 환경설정에서 글씨 크기를 변경할 수 있도록 변경" + CommConstants.sqlCR);
         patch.append("- 회화 검색에서 성조없이 검색이 가능하도록 수정" + CommConstants.sqlCR);
         patch.append("- 예문 데이타 추가" + CommConstants.sqlCR);

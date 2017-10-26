@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="단어장 관리"
         android:id="@+id/my_d_category_tv_category"
         android:layout_gravity="center"
         android:layout_alignParentTop="true"

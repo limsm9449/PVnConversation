@@ -115,6 +115,12 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+
+        <service android:name=".MySpeechService">
+            <intent-filter>
+                <action android:name="com.sleepingbear.vnconversation.MySpeechService" />
+            </intent-filter>
+        </service>
     </application>
 
 

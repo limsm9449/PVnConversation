@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent msg = new Intent(Intent.ACTION_SEND);
             msg.addCategory(Intent.CATEGORY_DEFAULT);
             msg.putExtra(Intent.EXTRA_SUBJECT, "최고의 베트남어 회화 어플");
-            msg.putExtra(Intent.EXTRA_TEXT, "베트남어 회화.. 참 어렵죠? 베트남어 회화에 도움이 되는 '최고의 베트남어 회화' 어플을 사용해 보세요. https://play.google.com/store/apps/details?id=com.sleepingbear.pvnconversation ");
+            msg.putExtra(Intent.EXTRA_TEXT, "베트남어 회화.. 참 어렵죠? 베트남어 회화에 도움이 되는 '최고의 베트남어 회화' 어플을 사용해 보세요. https://play.google.com/store/apps/details?id=com.sleepingbear.vnconversation ");
             msg.setType("text/plain");
             startActivity(Intent.createChooser(msg, "어플 공유"));
         } else if (id == R.id.action_settings) {
@@ -399,6 +399,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ((VocabularyFragment) adapter.getItem(CommConstants.f_Vocabulary)).changeListView();
 
                 break;
+            case CommConstants.s_vocabulary:
+                ((VocabularyFragment) adapter.getItem(CommConstants.f_Vocabulary)).changeListView();
         }
     }
 

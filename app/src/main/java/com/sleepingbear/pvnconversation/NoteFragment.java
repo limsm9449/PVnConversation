@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,9 +171,9 @@ public class NoteFragment extends Fragment implements View.OnClickListener {
         final View dialog_layout = mInflater.inflate(R.layout.dialog_note_iud, null);
 
         //dialog 생성..
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialog_layout);
-        final android.app.AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
 
         if ( "C01".equals(groupCode) || "C02".equals(groupCode) ) {
             if ( "C01".equals(groupCode) ) {

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -195,9 +196,9 @@ public class ConversationStudyFragment extends Fragment implements View.OnClickL
                     final View dialog_layout = inflater.inflate(R.layout.dialog_correct_answer, null);
 
                     //dialog 생성..
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setView(dialog_layout);
-                    final android.app.AlertDialog alertDialog = builder.create();
+                    final AlertDialog alertDialog = builder.create();
 
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_han)).setText(my_tv_han.getText());
                     ((TextView) dialog_layout.findViewById(R.id.my_tv_foreign)).setText(my_tv_foreign.getText());
